@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  localstack:
+    image: localstack/localstack:latest
+    environment:
+      - AWS_DEFAULT_REGION=us-east-1
+      - EDGE_PORT=4566
+      - DATA_DIR=/tmp/localstack/data
+      - SERVICES=s3,lambda
+    ports:
+      - '4566-4583:4566-4583'
+    volumes:
+      - "./tmp/localstack:/tmp/localstack"
+      - "./tmp/data:/tmp/localstack"
+  glue:
+    image: amazon/aws-glue-libs:glue_libs_3.0.0_image_01
+    ports:
+      - 8888:8888
+      - 8000:8000
+      - 4040:4040
+    links:
+      - localstack
+    environment:
+      - DISABLE_SSL=true
+      - S3_ENDPOINT=http://localstack:4566
+    command:
+      - /home/glue_user/jupyter/jupyter_start.sh
+    volumes:
+      - "./glue/:/home/glue_user/workspace/jupyter_workspace"

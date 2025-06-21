@@ -1,2 +1,3 @@
 moto[all]==2.0.5
 pyspark
+urllib3>=2.5.0 # not directly required, pinned by Snyk to avoid a vulnerability

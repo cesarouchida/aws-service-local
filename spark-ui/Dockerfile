@@ -1,6 +1,6 @@
 FROM amazonlinux:2
 FROM amazoncorretto:8
-FROM maven:3.6-amazoncorretto-8
+FROM maven:3.9.11-amazoncorretto-8
 
 RUN yum install -y procps
 
